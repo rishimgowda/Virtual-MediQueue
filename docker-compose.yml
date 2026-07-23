@@ -1,0 +1,51 @@
+services:
+    mongo:
+        image: mongo:7
+        container_name: mediqueue-mongo
+        restart: unless-stopped
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongo-data:/data/db
+        healthcheck:
+            test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        container_name: mediqueue-backend
+        restart: unless-stopped
+        depends_on:
+            mongo:
+                condition: service_healthy
+        ports:
+            - "8000:8000"
+        environment:
+            NODE_ENV: development
+            PORT: 8000
+            CLIENT_ORIGIN: http://localhost:5173
+            MONGODB_URI: mongodb://mongo:27017
+            DB_NAME: MediQueue
+            ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET:-dev-access-token-secret-change-me}
+            REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET:-dev-refresh-token-secret-change-me}
+            ACCESS_TOKEN_EXPIRES_IN: 15m
+            REFRESH_TOKEN_EXPIRES_IN: 7d
+            BCRYPT_SALT_ROUNDS: 12
+
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        container_name: mediqueue-frontend
+        restart: unless-stopped
+        depends_on:
+            - backend
+        ports:
+            - "5173:5173"
+
+volumes:
+    mongo-data:
