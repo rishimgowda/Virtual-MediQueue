@@ -24,3 +24,9 @@ export const ProtectedRoute = ({ children, roles }) => {
 
     return children;
 };
+
+/*Protecting pages that require authentication.
+Showing a loading screen while authentication is being verified.
+Redirecting unauthenticated users to the login page.
+Restricting pages based on user roles.
+Rendering the requested page only if all access checks pass.*/
