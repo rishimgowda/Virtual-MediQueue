@@ -66,3 +66,11 @@ export const useAuth = () => {
     if (!ctx) throw new Error("useAuth must be used inside <AuthProvider>");
     return ctx;
 };
+
+
+/*Creating a global authentication context.
+Storing the currently logged-in user's information.
+Checking whether a user is already logged in when the app starts.
+Providing login, registration, and logout functionality.
+Sharing authentication data and functions with every component in the application through React Context.
+Providing a simple useAuth() hook so components can easily access authentication features*/
