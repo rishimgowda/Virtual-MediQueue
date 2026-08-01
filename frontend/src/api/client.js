@@ -54,3 +54,11 @@ export const errorMessage = (err, fallback = "Something went wrong") => {
         fallback
     );
 };
+
+
+/*Creating one centralized API client (api).
+Automatically attaching common settings (base URL, cookies, timeout).
+Handling expired access tokens automatically.
+Ensuring only one refresh request is sent even if many requests fail simultaneously.
+Retrying failed requests after a successful refresh.
+Providing a common helper for extracting readable API error messages.*/
