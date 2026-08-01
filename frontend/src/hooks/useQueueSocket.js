@@ -35,3 +35,9 @@ export const useQueueSocket = (doctorId, onUpdate) => {
         };
     }, [doctorId]);
 };
+
+/*Creating and maintaining a single shared Socket.IO connection.
+Allowing components to subscribe to live updates for a doctor's queue.
+Listening for queue changes sent by the backend.
+Automatically cleaning up listeners when they are no longer needed.
+Providing real-time updates without repeatedly calling REST APIs.*/
