@@ -17,3 +17,13 @@ export class ApiError extends Error {
 export const asyncHandler = (fn) => (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch(next);
 };
+
+/*Request
+    ↓
+Controller (wrapped with asyncHandler)
+    ↓
+Error occurs?
+   ↙        ↘
+ No         Yes
+ ↓           ↓
+Continue   Forward to Global Error Handler*/
