@@ -88,3 +88,13 @@ export const schemas = {
         params: z.object({ appointmentId: objectId }),
     }),
 };
+
+/*Client sends request
+        ↓
+Validate request using schema
+        ↓
+Valid?
+     ↙      ↘
+   Yes      No
+    ↓        ↓
+Controller   Return Validation Error*/
